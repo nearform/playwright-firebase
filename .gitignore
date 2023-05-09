@@ -8,3 +8,8 @@ node_modules
 
 # OS X
 .DS_Store
+/test-results/
+/playwright-report/
+/playwright/.cache/
+.auth
+

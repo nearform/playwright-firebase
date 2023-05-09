@@ -1,12 +1,11 @@
 {
-  "name": "hub-template",
+  "name": "playwright-firebase",
   "version": "1.0.0",
   "description": "Template to start a new repository on the hub",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "lint": "eslint .",
-    "test": "echo \"Error: no test specified\" && exit 0",
     "prepare": "husky install"
   },
   "repository": {
@@ -23,11 +22,16 @@
   "devDependencies": {
     "@commitlint/cli": "^17.6.3",
     "@commitlint/config-conventional": "^17.6.3",
+    "@playwright/test": "^1.33.0",
+    "@types/node": "^20.1.1",
     "eslint": "^8.40.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "firebase": "^9.21.0",
+    "firebase-admin": "^11.8.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.2",
+    "playwright": "^1.33.0",
     "prettier": "^2.8.8"
   },
   "lint-staged": {
