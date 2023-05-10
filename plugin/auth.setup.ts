@@ -27,18 +27,18 @@ const loginWithCustomToken = async (app: FirebaseApp, uid: string): Promise<User
     const token: string = await admin.auth().createCustomToken(uid)
     const auth: Auth = getAuth(app)
     return new Promise((resolve, reject) => {
-        auth.onAuthStateChanged(auth => {
-            if (auth) {
-                resolve(auth)
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                resolve(user)
             }
         })
         signInWithCustomToken(auth, token).catch(reject)
     })
 }
 
-const getCredentials = async (serviceAccount: ServiceAccount, options: string, uid: string) => {
+const getCredentials = async (serviceAccount: ServiceAccount, options: FirebaseOptions, uid: string) => {
     setupAdmin(serviceAccount)
-    const app: FirebaseApp = setupWorker(JSON.parse(options))
+    const app: FirebaseApp = setupWorker(options)
     const credentials: User = await loginWithCustomToken(app, uid)
     return credentials
 }

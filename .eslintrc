@@ -1,4 +1,8 @@
 {
+  "env": {
+    "node": true,
+    "commonjs": true
+  },
   "root": true,
   "parser": "@typescript-eslint/parser",
   "plugins": [

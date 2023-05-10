@@ -1,23 +1,26 @@
 import { readFileSync, writeFileSync } from 'fs'
+import { User } from 'firebase/auth'
 
 
 
-const formatPersistence = (credentials) => {
+const formatPersistence = (user: User, apiKey: string) => {
     //nicer formatting for setting session storage with specific key & value
+    //Using UserImpl type instead of passing API key ascertains whether authentication has
+    //console.log(user.toJSON().apiKey)
     const authSession = {
-        key: Object.keys(credentials.auth.persistenceManager.persistence.storage)[0],
-        value: Object.values(credentials.auth.persistenceManager.storage)[0]
+        key: `firebase:authUser:${apiKey}:[DEFAULT]`,
+        value: user.toJSON()
     }
     return authSession
 }
 
-const writeAuthentication = (credentials) => {
-    const authSession = formatPersistence(credentials)
-    writeFileSync('./.auth/session.json', JSON.stringify(authSession), 'utf-8')
+const saveAuth = (credentials: User, apiKey: string) => {
+    const authSession = formatPersistence(credentials, apiKey)
+    writeFileSync('./plugin/.auth/session.json', JSON.stringify(authSession), 'utf-8')
 }
 
-const readAuthentication = () => {
+const readAuth = () => {
     return JSON.parse(readFileSync('./.auth/session.json',).toString())
 }
 
-export { readAuthentication, writeAuthentication, formatPersistence }
+export { readAuth, saveAuth, formatPersistence }
