@@ -6,19 +6,25 @@ import { readAuth } from './utils.js';
  * Login and Logout fixtures - assumes playwright is on the page where authentication occurs
  */
 export const test = base.test.extend({
-    login: async ({ page }, use) => {
+    login: async ({ page }, use, testInfo) => {
         const session = readAuth();
-        await page.evaluate(async (session) => {
-            window.sessionStorage.setItem(session.key, session.value);
-        }, session);
+        try {
+            await page.goto(testInfo.project.use.baseURL, { waitUntil: 'load' });
+            await page.evaluate(async (session) => {
+                sessionStorage.setItem(session.key, session.value);
+            }, session);
+        }
+        catch (err) {
+            throw Error(`${err}\n Are you awaiting the page to load before authenticating?`);
+        }
         // Use the fixture value in the test.
         await use(page);
     },
-    logout: async ({ page }, use) => {
-        const sessionKey = readAuth().key;
-        await page.evaluate((sessionKey) => {
-            window.sessionStorage.removeItem(sessionKey);
-        }, sessionKey);
-        await use(page);
-    }
+    // logout: async ({ page }, use) => {
+    //     const sessionKey: string = readAuth().key
+    //     await page.evaluate((sessionKey) => {
+    //         sessionStorage.removeItem(sessionKey)
+    //     }, sessionKey)
+    //     await use(page)
+    // }
 });

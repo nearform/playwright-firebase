@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "prepare": "husky install",
-    "test": "npx tsc && jest dist/tests"
+    "test": "npx tsc && jest dist/tests/*.test.js"
   },
   "repository": {
     "type": "git",

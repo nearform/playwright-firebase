@@ -10,7 +10,7 @@ const OPTIONS = process.env.FIREBASE_CONFIG
 
 
 
-export async function getUser(): Promise<User | undefined> {
+export default async function getUser(): Promise<User | undefined> {
     if (OPTIONS && UID) {
         return await getCredentials(SERVICE_ACCOUNT, JSON.parse(OPTIONS), UID)
 
