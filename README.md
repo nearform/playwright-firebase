@@ -1,12 +1,13 @@
 ![CI](https://github.com/nearform/hub-template/actions/workflows/ci.yml/badge.svg?event=push)
 
-# Hub Template
+# Playwright-Firebase plugin
 
-A feature-packed template to start a new repository on the hub, including:
+Tidy way to authenticate Playwright E2E tests on Firebase. 
 
-- code linting with [ESlint](https://eslint.org) and [prettier](https://prettier.io)
-- pre-commit code linting and commit message linting with [husky](https://www.npmjs.com/package/husky) and [commitlint](https://commitlint.js.org/)
-- dependabot setup with automatic merging thanks to ["merge dependabot" GitHub action](https://github.com/fastify/github-action-merge-dependabot)
-- notifications about commits waiting to be released thanks to ["notify release" GitHub action](https://github.com/nearform/github-action-notify-release)
-- PRs' linked issues check with ["check linked issues" GitHub action](https://github.com/nearform/github-action-check-linked-issues)
-- Continuous Integration GitHub workflow
+## Basics
+
+The main function is `playwrightFirebasePlugin` that takes in 3 parameters: Service Account (admin side), User ID, and Firebase configurations (for default app). The admin information is used to generate an admin firebase instance, and that instance is used to create a custom token. Another firebase instance is used, given the UID and Firebase configurations to sign in using that custom token, the response being an object that we can use in the session storage of the website for authentication. 
+
+We use Playwright's fixtures to create a login function capable of handling the read/write of the session storage . This read/write feature is only for early-stage development, and will be deprecated in preference for storing the session storage in the Playwright environment. 
+
+The login fixture interacts with the Browser environment, reading the credentials, and pushing them into the session storage.
