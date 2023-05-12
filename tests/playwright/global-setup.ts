@@ -1,3 +1,4 @@
+/* eslint no-non-null-assertion: 0 */
 import { ServiceAccount } from "firebase-admin";
 import { readFileSync } from "fs";
 import { playwrightFirebasePlugin } from "../../index.js";
@@ -10,11 +11,7 @@ const OPTIONS = process.env.FIREBASE_CONFIG!
 
 export default async function globalSetup(config: FullConfig) {
     const { baseURL } = config.projects[0].use
-    const browser = await chromium.launch()
-    const page = await browser.newPage()
     if (baseURL) {
-        await page.goto(baseURL)
-        console.log('GONE TO PAGE')
         await playwrightFirebasePlugin(UID, serviceAccount, JSON.parse(OPTIONS))
     }
 }
