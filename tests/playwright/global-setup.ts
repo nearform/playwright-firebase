@@ -1,9 +1,9 @@
-/* eslint no-non-null-assertion: 0 */
+/* eslint @typescript-eslint/no-non-null-assertion: 0 */
 import { ServiceAccount } from "firebase-admin";
 import { readFileSync } from "fs";
 import { playwrightFirebasePlugin } from "../../index.js";
 import dotenv from 'dotenv'
-import { FullConfig, chromium } from "@playwright/test";
+import { FullConfig } from "@playwright/test";
 dotenv.config({ path: '.env', override: true })
 const UID = process.env.UID!
 const serviceAccount: ServiceAccount = JSON.parse(readFileSync('./serviceAccount.json').toString())
