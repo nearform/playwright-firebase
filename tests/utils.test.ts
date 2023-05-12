@@ -34,7 +34,7 @@ interface ProviderData {
 interface TokenManager {
     refreshToken: string
     accessToken: string
-    expirationTime: Number
+    expirationTime: number
 }
 
 
@@ -49,7 +49,7 @@ interface UserCredentials {
     lastLoginAt: string
     apiKey: string
     appName: string
-    toJSON: Function
+    toJSON: () => UserCredentials
 }
 
 jest.mock('./helpers/mock_firebase_impl.js', () => {

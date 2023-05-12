@@ -3,7 +3,7 @@ import { User } from 'firebase/auth'
 
 interface AuthSave {
     key: string
-    value: {}
+    value?: object
 }
 
 
