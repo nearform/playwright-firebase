@@ -6,8 +6,38 @@ Tidy way to authenticate Playwright E2E tests on Firebase.
 
 ## Basics
 
-The main function is `playwrightFirebasePlugin` that takes in 3 parameters: Service Account (admin side), User ID, and Firebase configurations (for default app). The admin information is used to generate an admin firebase instance, and that instance is used to create a custom token. Another firebase instance is used, given the UID and Firebase configurations to sign in using that custom token, the response being an object that we can use in the session storage of the website for authentication. 
+A simple export of test that includes the operation to authenticate with Firebase, given the Service Account, UID, and Firebase options.  We use Playwright's fixtures to create a `login` function that will sign in with a custom token. For the session storage to be written in, `login` automatically goes to the base url, and fills the session storage with the credentials. 
 
-We use Playwright's fixtures to create a login function capable of handling the read/write of the session storage . This read/write feature is only for early-stage development, and will be deprecated in preference for storing the session storage in the Playwright environment. 
+## Example
 
-The login fixture interacts with the Browser environment, reading the credentials, and pushing them into the session storage.
+```
+//playwright.config.ts
+...
+projects: [
+    {
+      name: 'chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+        UID: your-uid, //string
+        serviceAccount: your-service-account, //type: Service Account
+        options: your-firebase-options //type: FirebaseOptions
+      },
+    },
+ ...
+
+```
+Here we pass in the necessary constants into Playwright's fixtures. This can be detected by the `login` function. 
+Then we use the new `test` from the `playwright-firebase` package.
+```
+//example.spec.ts
+
+import { test } from 'playwright-firebase'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+test('Login sets the session state', async ({ page, login }): Promise<void> => {
+  await login
+  ...
+})
+
+```
+We're still working to resolve typescript errors. 
