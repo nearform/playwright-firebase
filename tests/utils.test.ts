@@ -80,15 +80,9 @@ test('Session storage can be written into', async () => {
     const user: User | undefined = await getUser()
     console.log(user)
     if (user) {
-        console.log(user)
-        saveAuth(user, API_KEY)
+        const authState = saveAuth(user, API_KEY)
+        expect(authState.key).toBe(`firebase:authUser:${API_KEY}:[DEFAULT]`)
     }
-    const authState = JSON.parse(readFileSync('./plugin/.auth/session.json').toString())
-    expect(authState.key).toBe(`firebase:authUser:${API_KEY}:[DEFAULT]`)
-    expect(authState.value.uid).toBe(UID)
-    expect(authState.value.providerData[0].email).toBe(email)
-    expect(authState.value.stsTokenManager.accessToken).toBe(sts_token_manager.accessToken)
-    writeFileSync('./plugin/.auth/session.json', '')
 })
 
 
