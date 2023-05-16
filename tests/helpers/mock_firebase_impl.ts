@@ -1,4 +1,4 @@
-import getCredentials from "../../plugin/auth.setup.js"
+import { getCredentials } from "../../plugin/auth.setup.js"
 import dotenv from 'dotenv'
 dotenv.config({ path: '.env', override: true })
 import { readFileSync } from "fs"

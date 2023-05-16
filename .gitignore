@@ -14,4 +14,5 @@ node_modules
 .auth
 serviceAccount.json
 .env
-
+./dist/
+playwright-firebase-1.0.0.tgz

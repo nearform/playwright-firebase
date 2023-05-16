@@ -34,10 +34,22 @@ const loginWithCustomToken = async (app, uid) => {
         signInWithCustomToken(auth, token).catch(reject);
     });
 };
+const logOut = async (app) => {
+    const auth = getAuth(app);
+    return new Promise((resolve, reject) => {
+        auth.onAuthStateChanged((auth) => {
+            if (!auth) {
+                console.log(typeof (auth));
+                resolve();
+            }
+        });
+        auth.signOut().catch(reject);
+    });
+};
 const getCredentials = async (serviceAccount, options, uid) => {
     setupAdmin(serviceAccount);
     const app = setupWorker(options);
     const credentials = await loginWithCustomToken(app, uid);
     return credentials;
 };
-export default getCredentials;
+export { logOut, getCredentials };

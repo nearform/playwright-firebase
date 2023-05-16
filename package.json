@@ -2,12 +2,16 @@
   "name": "playwright-firebase",
   "version": "1.0.0",
   "description": "Template to start a new repository on the hub",
-  "main": "index.js",
+  "main": "dist/index.js",
   "type": "module",
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "prepare": "husky install",
-    "test": "npx tsc && jest dist/tests/*.test.js"
+    "test": "npx tsc && jest dist/tests/*.test.js",
+    "rebuild": "rm ./playwright-firebase-1.0.0.tgz && npx tsc && npm pack"
   },
   "repository": {
     "type": "git",

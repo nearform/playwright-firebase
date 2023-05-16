@@ -34,18 +34,25 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
+      name: 'playwright-firebase-setup',
+      testMatch: '**/*-setup.ts'
+    },
+    {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'], baseURL: 'http://localhost:5173' },
+      dependencies: ['playwright-firebase-setup']
     },
 
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'], baseURL: 'http://localhost:5173' },
+      dependencies: ['playwright-firebase-setup']
     },
 
     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
+      dependencies: ['playwright-firebase-setup']
     },
 
     /* Test against mobile viewports. */

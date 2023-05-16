@@ -35,6 +35,19 @@ const loginWithCustomToken = async (app: FirebaseApp, uid: string): Promise<User
         signInWithCustomToken(auth, token).catch(reject)
     })
 }
+const logOut = async (app: FirebaseApp): Promise<void> => {
+    const auth: Auth = getAuth(app)
+    return new Promise((resolve, reject) => {
+        auth.onAuthStateChanged((auth) => {
+            if (!auth) {
+                console.log(typeof (auth))
+                resolve()
+            }
+
+        })
+        auth.signOut().catch(reject)
+    })
+}
 
 const getCredentials = async (serviceAccount: ServiceAccount, options: FirebaseOptions, uid: string) => {
     setupAdmin(serviceAccount)
@@ -43,4 +56,4 @@ const getCredentials = async (serviceAccount: ServiceAccount, options: FirebaseO
     return credentials
 }
 
-export default getCredentials
+export { logOut, getCredentials }
