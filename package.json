@@ -7,6 +7,7 @@
   "files": [
     "dist/**/*"
   ],
+  "types": "./dist/typings/index.d.ts",
   "scripts": {
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "prepare": "husky install",
