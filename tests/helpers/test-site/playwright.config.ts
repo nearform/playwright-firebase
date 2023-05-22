@@ -28,9 +28,9 @@ export default defineConfig<Credentials>({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: 'http://127.0.0.1:3000',
-    UID: process.env.REACT_APP_UID,
-    options: JSON.parse(process.env.REACT_APP_FIREBASE_CONFIG!),
-    serviceAccount: JSON.parse(readFileSync('./serviceAccount.json').toString()),
+    // UID: process.env.REACT_APP_UID,
+    // options: JSON.parse(process.env.REACT_APP_FIREBASE_CONFIG!),
+    // serviceAccount: JSON.parse(readFileSync('./serviceAccount.json').toString()),
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     video: 'on'
@@ -38,7 +38,7 @@ export default defineConfig<Credentials>({
 
   /* Configure projects for major browsers */
   projects: [
-    { name: 'setup', testMatch: /auth-setup\.ts/ },
+    { name: 'setup', testMatch: /auth.setup\.ts/ },
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
