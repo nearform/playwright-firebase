@@ -1,8 +1,9 @@
 import { User } from 'firebase/auth';
+import { UserCredentials } from '../tests/helpers/authentication.js';
 interface AuthSave {
     key: string;
     value: object;
 }
-declare const saveAuth: (user: User, apiKey: string) => AuthSave;
-export { saveAuth };
+declare const formatAuth: (user: User | UserCredentials, apiKey: string) => AuthSave;
+export { formatAuth };
 //# sourceMappingURL=utils.d.ts.map

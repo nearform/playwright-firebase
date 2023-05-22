@@ -12,7 +12,8 @@
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "prepare": "husky install",
     "test": "npx tsc && jest dist/tests/*.test.js",
-    "rebuild": "rm ./playwright-firebase-1.0.0.tgz && npx tsc && npm pack"
+    "rebuild": "rm ./playwright-firebase-1.0.0.tgz && npx tsc && npm pack",
+    "test:pw": "npx playwright test"
   },
   "repository": {
     "type": "git",
@@ -40,7 +41,7 @@
     "eslint": "^8.40.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "firebase": "^9.21.0",
+    "firebase": "^9.22.0",
     "firebase-admin": "^11.8.0",
     "husky": "^8.0.3",
     "jest": "^29.5.0",
@@ -53,6 +54,7 @@
   },
   "dependencies": {
     "dotenv": "^16.0.3",
+    "firebase-tools": "^12.0.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   }

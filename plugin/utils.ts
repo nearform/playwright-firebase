@@ -1,11 +1,12 @@
 import { User } from 'firebase/auth'
+import { UserCredentials } from '../tests/helpers/authentication.js'
 
 interface AuthSave {
     key: string
     value: object
 }
 
-const saveAuth = (user: User, apiKey: string): AuthSave => {
+const formatAuth = (user: User | UserCredentials, apiKey: string): AuthSave => {
     //nicer formatting for setting session storage with specific key & value
     const authSession = {
         key: `firebase:authUser:${apiKey}:[DEFAULT]`,
@@ -13,4 +14,4 @@ const saveAuth = (user: User, apiKey: string): AuthSave => {
     }
     return authSession
 }
-export { saveAuth }
+export { formatAuth }

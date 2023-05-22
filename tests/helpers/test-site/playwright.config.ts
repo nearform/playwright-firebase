@@ -1,6 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
-import { resolve } from 'path'
-import { Credentials } from '.';
+import { Credentials } from '../../..';
 import { readFileSync } from 'fs';
 import dotenv from 'dotenv'
 dotenv.config({ path: './.env' })
@@ -14,7 +13,7 @@ dotenv.config({ path: './.env' })
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig<Credentials>({
-  testDir: './tests/playwright',
+  testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -28,32 +27,32 @@ export default defineConfig<Credentials>({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://127.0.0.1:3000',
-    baseURL: 'http://localhost:5000',
+    baseURL: 'http://127.0.0.1:3000',
+    UID: process.env.REACT_APP_UID,
+    options: JSON.parse(process.env.REACT_APP_FIREBASE_CONFIG!),
+    serviceAccount: JSON.parse(readFileSync('./serviceAccount.json').toString()),
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-    video: 'on',
-    UID: process.env.UID,
-    serviceAccount: JSON.parse(readFileSync('./serviceAccount.json').toString()),
-    options: JSON.parse(process.env.FIREBASE_CONFIG!)
-
+    video: 'on'
   },
 
   /* Configure projects for major browsers */
   projects: [
+    { name: 'setup', testMatch: /auth-setup\.ts/ },
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] }
+      use: { ...devices['Desktop Chrome'] },
     },
 
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] }
+      use: { ...devices['Desktop Firefox'] },
     },
+
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'], }
-    }
+      use: { ...devices['Desktop Safari'] },
+    },
 
     /* Test against mobile viewports. */
     // {
@@ -78,8 +77,8 @@ export default defineConfig<Credentials>({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'node_modules/.bin/firebase emulators:start',
-    url: 'http://127.0.0.1:5000',
+    command: 'npm run start',
+    url: 'http://127.0.0.1:3000',
     reuseExistingServer: !process.env.CI,
   },
 });

@@ -12,6 +12,9 @@ A simple export of test that includes the operation to authenticate with Firebas
 
 ```
 //playwright.config.ts
+
+import {Credentials} from 'playwright-firebase'
+defineConfig<Credentials> ({
 ...
 projects: [
     {
@@ -24,6 +27,8 @@ projects: [
       },
     },
  ...
+  ]
+})
 
 ```
 Here we pass in the necessary constants into Playwright's fixtures. This can be detected by the `login` function. 
