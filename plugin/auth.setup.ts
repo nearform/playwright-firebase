@@ -43,7 +43,6 @@ const logOut = async (app: FirebaseApp): Promise<Auth | null> => {
                 console.log(auth)
                 resolve(auth)
             }
-
         })
         auth.signOut().catch(reject)
     })
@@ -55,7 +54,8 @@ const getCredentials = async (serviceAccount: ServiceAccount, options: FirebaseO
     }
     const app: FirebaseApp = setupWorker(options)
     const credentials: User = await loginWithCustomToken(app, uid)
-    return credentials
+    const token: string = await admin.auth().createCustomToken(uid)
+    return token
 }
 
 export { logOut, getCredentials }
