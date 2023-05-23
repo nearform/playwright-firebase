@@ -6,7 +6,7 @@ initializeApp(JSON.parse(process.env.REACT_APP_FIREBASE_CONFIG))
 const provider = new GoogleAuthProvider()
 function App() {
   const auth = getAuth()
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(auth.currentUser)
   const handleSignIn = () => {
     signInWithPopup(auth, provider).then((result) => {
       setUser(result.user)
@@ -28,6 +28,11 @@ function App() {
       }),
     []
   )
+  useEffect(() => {
+    console.log(user)
+  }, [user])
+
+
   return (
     <div className="App">
       <button onClick={handleSignIn}>Sign in here</button>
