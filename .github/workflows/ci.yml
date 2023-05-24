@@ -19,9 +19,9 @@ jobs:
           cache-dependency-path: './tests/helpers/test-site/package.json'
       - run: |
           npm ci
+          npm run pw
           npm run lint
-          npx playwright install --with-deps
-          npm test
+          npm run test
 
   automerge:
     name: Merge dependabot's PRs
