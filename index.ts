@@ -1,18 +1,12 @@
 /* eslint no-undef: 0 */
+/* eslint @typescript-eslint/ban-ts-comment: 0 */
 
 import { ServiceAccount } from "firebase-admin"
-import { FirebaseApp, FirebaseOptions } from "firebase/app"
-import { getCredentials, logOut } from "./plugin/auth.setup.js"
-import { formatAuth } from "./plugin/utils.js"
+import { FirebaseOptions } from "firebase/app"
+import { getToken } from "./plugin/auth.setup.js"
 import { User } from "firebase/auth"
-import { TestType, Page, PlaywrightTestArgs, PlaywrightWorkerArgs, PlaywrightTestOptions, PlaywrightWorkerOptions } from '@playwright/test'
-import { createConfigItem } from "@babel/core"
-import { sign } from "crypto"
+import { Page, } from '@playwright/test'
 
-interface AuthSave {
-    key: string
-    value: object
-}
 export class Authentication {
     private readonly UID: string;
     private readonly options: FirebaseOptions;
@@ -27,29 +21,42 @@ export class Authentication {
         this.token = ''
         // this.page = page
     }
+    async addFirebaseScript(page: Page) {
+        await page.addScriptTag({ url: 'https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js', type: 'module' })
+        await page.addScriptTag({ url: 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js', type: 'module' })
+        await page.addScriptTag({ path: require.resolve('./plugin/utils.js'), type: "module" })
+        //until import(..) works with page.evaluate, this will have to be the work around.
+    }
     async login(page: Page) {
         if (this.user) {
+            console.log('User already authenticated')
             return
         }
-        await page.goto('/')
-        this.token = await getCredentials(this.serviceAccount, this.options, this.UID)
-        await page.evaluate(async () => {
-            const { getAuth, signInWithCustomToken } = await import("https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js");
-            const { getApps, initializeApp } = await import("https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js");
-        })
+        this.token = await getToken(this.serviceAccount, this.options, this.UID)
+        await this.addFirebaseScript(page)
         await page.evaluate(async ({ token, config }) => {
-            const apps = getApps();
+            // @ts-ignore
+            const apps = firebase.getApps()
             let app;
             if (apps.length >= 1) {
                 app = apps[0];
             } else {
-                app = initializeApp(config);
+                // @ts-ignore
+                app = firebase.initializeApp(config);
             }
-            const auth = getAuth(app);
-            await signInWithCustomToken(auth, token);
+            // @ts-ignore
+            const auth = Auth.getAuth(app);
+            // @ts-ignore
+            await Auth.signInWithCustomToken(auth, token);
         }, { token: this.token, config: this.options })
     }
     async logout(page: Page) {
+        this.addFirebaseScript(page)
+        await page.evaluate(async () => {
+            // @ts-ignore
+            const auth = Auth.getAuth()
+            await auth.signOut()
+        })
 
     }
 }
@@ -61,9 +68,9 @@ export type Credentials = {
     options: FirebaseOptions
 }
 
-export default function playwrightFirebasePlugin(serviceAccount: ServiceAccount, options: FirebaseOptions, UID: string, base: TestType<PlaywrightTestArgs & PlaywrightTestOptions, PlaywrightWorkerArgs & PlaywrightWorkerOptions>) {
+export default function playwrightFirebasePlugin(serviceAccount: ServiceAccount, options: FirebaseOptions, UID: string, base: any) {
 
-    const test = base.extend<Credentials>({
+    const test = base.extend({
         UID: [UID, { option: true }],
         serviceAccount: [serviceAccount, { option: true }],
         options: [options, { option: true }],

@@ -1,6 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
-import { Credentials } from '../../..';
-import { readFileSync } from 'fs';
+import { Credentials } from '../../../index';
 import dotenv from 'dotenv'
 dotenv.config({ path: './.env' })
 /**

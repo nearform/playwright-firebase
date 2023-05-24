@@ -1,9 +1,10 @@
-const saveAuth = (user, apiKey) => {
-    //nicer formatting for setting session storage with specific key & value
-    const authSession = {
-        key: `firebase:authUser:${apiKey}:[DEFAULT]`,
-        value: user.toJSON()
-    };
-    return authSession;
-};
-export { saveAuth };
+/* eslint no-undef: 0 */
+/* eslint @typescript-eslint/ban-ts-comment: 0 */
+// @ts-ignore
+import * as Auth from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js';
+// @ts-ignore
+import * as firebase from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
+// @ts-ignore
+window.Auth = Auth;
+// @ts-ignore
+window.firebase = firebase;
