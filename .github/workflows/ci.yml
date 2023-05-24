@@ -16,9 +16,10 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
+          cache-dependency-path: |
+            './tests/helpers/test-site/package.json'
+            './package.json'
       - run: |
-          pwd
-          ls
           npm ci
           npm run pw
           npm run lint
