@@ -1,5 +1,6 @@
 /* eslint no-undef: 0 */
 /* eslint @typescript-eslint/ban-ts-comment: 0 */
+/* eslint  @typescript-eslint/no-explicit-any: 0 */
 import { getToken } from "./plugin/auth.setup.js";
 export class Authentication {
     page;

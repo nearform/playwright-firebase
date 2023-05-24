@@ -1,5 +1,6 @@
 /* eslint no-undef: 0 */
 /* eslint @typescript-eslint/ban-ts-comment: 0 */
+/* eslint  @typescript-eslint/no-explicit-any: 0 */
 
 import { ServiceAccount } from "firebase-admin"
 import { FirebaseOptions } from "firebase/app"
