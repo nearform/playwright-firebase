@@ -11,10 +11,9 @@
   "scripts": {
     "lint": "eslint \"*.{ts,tsx}\"",
     "prepare": "husky install",
-    "test": "npx tsc && cd tests/helpers/test-site && npm ci && npx playwright test",
+    "test": "cd tests/helpers/test-site && npm ci && npx playwright test",
     "rebuild": "rm ./playwright-firebase-1.0.0.tgz && npx tsc && npm pack",
-    "test:pw": "npx playwright test",
-    "pw": "npx playwright install --with-deps"
+    "test:pw": "npx playwright test"
   },
   "repository": {
     "type": "git",
