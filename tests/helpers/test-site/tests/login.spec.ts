@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import { test } from '../auth.setup'
-import { Page } from '@playwright/test'
+import { Page } from '@playwright/test';
 test('has title', async ({ page, auth }: { page: Page, auth: any }) => {
   await page.goto('/', { waitUntil: 'networkidle' });
   await auth.login(page)
