@@ -4,45 +4,40 @@
 
 Tidy way to authenticate Playwright E2E tests on Firebase. 
 
-## Basics
-
-A simple export of test that includes the operation to authenticate with Firebase, given the Service Account, UID, and Firebase options.  We use Playwright's fixtures to create a `login` function that will sign in with a custom token. For the session storage to be written in, `login` automatically goes to the base url, and fills the session storage with the credentials. 
-
-## Example
-
+## Setup
+### TypeScript
+If you're using Typescript, one small addition you'll need to make is to add the type `Credentials` to your `playwright.config.ts` such that
 ```
-//playwright.config.ts
-
-import {Credentials} from 'playwright-firebase'
-defineConfig<Credentials> ({
-...
-projects: [
-    {
-      name: 'chromium',
-      use: {
-        ...devices['Desktop Chrome'],
-        UID: your-uid, //string
-        serviceAccount: your-service-account, //type: Service Account
-        options: your-firebase-options //type: FirebaseOptions
-      },
-    },
- ...
-  ]
-})
-
-```
-Here we pass in the necessary constants into Playwright's fixtures. This can be detected by the `login` function. 
-Then we use the new `test` from the `playwright-firebase` package.
-```
-//example.spec.ts
-
-import { test } from 'playwright-firebase'
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-test('Login sets the session state', async ({ page, login }): Promise<void> => {
-  await login
+import {Credentials} from <insert plugin name here>
+export default defineConfig<Credentials>({
   ...
-})
-
+  })
 ```
-We're still working to resolve typescript errors. 
+
+Create a setup file that is ran before all tests, where we'll redefine test, so you can import it from your setup file with the `auth` fixture added.
+```
+// auth.setup.ts
+import playwrightFirebasePlugin from <insert plugin name here>
+import { test as base } from '@playwright/test'
+
+const serviceAccount = JSON.parse(process.env.SERVICE_ACCOUNT!)
+const uid = process.env.REACT_APP_UID!
+const options = JSON.parse(process.env.REACT_APP_FIREBASE_CONFIG!)
+export const test = playwrightFirebasePlugin(serviceAccount, options, uid, base)
+```
+Where your secrets are stored in a `.env` file. Make sure to **NOT COMMIT THIS FILE**. 
+Now, by using the new `test` we can incorporate the `auth` generated from the package.
+```
+import { expect } from '@playwright/test';
+import { test } from '../auth.setup'
+import { Page } from '@playwright/test';
+test('has title', async ({ page, auth }: { page: Page, auth: any }) => {
+  await page.goto('/', { waitUntil: 'networkidle' });
+  await auth.login(page)
+
+  const txt = page.getByText('Welcome! You are now logged in')
+  await expect(txt).toBeVisible()
+  await auth.logout(page)
+  await expect(txt).not.toBeVisible()
+});
+```
