@@ -6,7 +6,7 @@ import { ServiceAccount } from "firebase-admin"
 import { FirebaseOptions } from "firebase/app"
 import { getToken } from "./plugin/auth.setup.js"
 import { User } from "firebase/auth"
-import { Page, } from '@playwright/test'
+import { Page } from '@playwright/test'
 
 export class Authentication {
     private readonly UID: string;
