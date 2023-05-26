@@ -75,6 +75,4 @@ export const dummyFirebaseConfig: FirebaseOptions = {
     apiKey: API_KEY,
     authDomain: "dummy-domain",
     projectId: "test-project-id",
-
-
 }

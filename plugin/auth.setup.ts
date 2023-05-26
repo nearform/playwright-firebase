@@ -1,5 +1,4 @@
 import admin, { ServiceAccount } from 'firebase-admin'
-import { FirebaseOptions } from 'firebase/app';
 /**
  * Sets up Admin appp. Creates a custom token with the admin app, and
  * use that in the browser to authenticate
@@ -12,7 +11,7 @@ const setupAdmin = (serviceAccount: ServiceAccount): void => {
     }
 }
 
-const getToken = async (serviceAccount: ServiceAccount, options: FirebaseOptions, uid: string) => {
+const getToken = async (serviceAccount: ServiceAccount, uid: string) => {
     if (admin.apps?.length === 0) {
         setupAdmin(serviceAccount)
     }

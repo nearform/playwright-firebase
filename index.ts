@@ -20,7 +20,6 @@ export class Authentication {
         this.serviceAccount = serviceAccount
         this.user = null
         this.token = ''
-        // this.page = page
     }
     async addFirebaseScript(page: Page) {
         await page.addScriptTag({ url: 'https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js', type: 'module' })
@@ -33,7 +32,7 @@ export class Authentication {
             console.log('User already authenticated')
             return
         }
-        this.token = await getToken(this.serviceAccount, this.options, this.UID)
+        this.token = await getToken(this.serviceAccount, this.UID)
         await this.addFirebaseScript(page)
         await page.evaluate(async ({ token, config }) => {
             // @ts-ignore
