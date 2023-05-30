@@ -3,7 +3,9 @@
 # Playwright-Firebase plugin
 
 Tidy way to authenticate Playwright E2E tests on Firebase. 
-
+## Commands
+- `auth.login(page)` : logs in
+- `auth.logout(page)`: logs out
 ## Setup
 ### TypeScript
 If you're using Typescript, one small addition you'll need to make is to add the type `Credentials` to your `playwright.config.ts` such that
@@ -41,3 +43,4 @@ test('has title', async ({ page, auth }: { page: Page, auth: any }) => {
   await expect(txt).not.toBeVisible()
 });
 ```
+
