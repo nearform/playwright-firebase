@@ -1,7 +1,7 @@
 {
   "name": "playwright-firebase",
   "version": "1.0.0",
-  "description": "Template to start a new repository on the hub",
+  "description": "Plugin to allow for Firebase authentication in Playwright tests",
   "main": "dist/index.js",
   "type": "module",
   "files": [
@@ -14,19 +14,24 @@
     "test": "cd tests/helpers/test-site && npm ci && npx playwright test",
     "rebuild": "rm ./playwright-firebase-1.0.0.tgz && npx tsc && npm pack",
     "test:pw": "npx playwright test",
-    "pw": "npx playwright install --with-deps"
+    "pw": "npx playwright install --with-deps",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nearform/hub-template.git"
+    "url": "git+https://github.com/nearform/playwright-firebase.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "playwright",
+    "firebase",
+    "testing",
+    "plugin"
+  ],
+  "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/nearform/hub-template/issues"
+    "url": "https://github.com/nearform/playwright-firebase/issues"
   },
-  "homepage": "https://github.com/nearform/hub-template#readme",
+  "homepage": "https://github.com/nearform/playwright-firebase#readme",
   "devDependencies": {
     "@babel/core": "^7.21.8",
     "@babel/preset-env": "^7.21.5",

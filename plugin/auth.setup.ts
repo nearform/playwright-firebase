@@ -1,6 +1,6 @@
 import admin, { ServiceAccount } from 'firebase-admin'
 /**
- * Sets up Admin appp. Creates a custom token with the admin app, and
+ * Sets up Admin app. Creates a custom token with the admin app, and
  * use that in the browser to authenticate
  */
 const setupAdmin = (serviceAccount: ServiceAccount): void => {

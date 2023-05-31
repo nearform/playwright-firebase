@@ -1,60 +1,65 @@
-/* eslint no-undef: 0 */
-/* eslint @typescript-eslint/ban-ts-comment: 0 */
-/* eslint  @typescript-eslint/no-explicit-any: 0 */
-
 import { ServiceAccount } from "firebase-admin"
-import { FirebaseOptions } from "firebase/app"
+import { FirebaseApp, FirebaseOptions } from "firebase/app"
 import { getToken } from "./plugin/auth.setup.js"
-import { User } from "firebase/auth"
+import { Auth, User } from "firebase/auth"
 import { Page } from '@playwright/test'
 
+// Since these are declared in browser modules, it's hard to understand what the types should be.
+// As such we're defining what shape we're expecting.
+declare global {
+  type Firebase = {
+    getApps: () => FirebaseApp[];
+    initializeApp: (config: FirebaseOptions) => FirebaseApp;
+  }
+
+  type FirebaseAuth = {
+    getAuth: (app?: FirebaseApp) => Auth
+    signInWithCustomToken: (auth: Auth, token: String) => Promise<User>
+  }
+
+  interface Window {
+    firebase: Firebase;
+    Auth: FirebaseAuth;
+  }
+}
+
 export class Authentication {
-    private readonly UID: string;
-    private readonly options: FirebaseOptions;
-    private readonly serviceAccount: ServiceAccount;
-    private token: string
-    private user: User | null
-    constructor(public readonly page: Page, UID: string, options: FirebaseOptions, serviceAccount: ServiceAccount) {
-        this.UID = UID
-        this.options = options
-        this.serviceAccount = serviceAccount
-        this.user = null
-        this.token = ''
+    private token: string = '';
+    private user: User | null = null;
+
+    constructor(public readonly page: Page, private readonly UID: string, private readonly options: FirebaseOptions, private readonly serviceAccount: ServiceAccount) {
     }
+
     async addFirebaseScript(page: Page) {
         await page.addScriptTag({ url: 'https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js', type: 'module' })
         await page.addScriptTag({ url: 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js', type: 'module' })
         await page.addScriptTag({ path: require.resolve('./plugin/utils.js'), type: "module" })
-        //until import(..) works with page.evaluate, this will have to be the work around.
     }
+    
     async login(page: Page) {
         if (this.user) {
-            console.log('User already authenticated')
+            console.info('User already authenticated')
             return
         }
         this.token = await getToken(this.serviceAccount, this.UID)
         await this.addFirebaseScript(page)
         await page.evaluate(async ({ token, config }) => {
-            // @ts-ignore
-            const apps = firebase.getApps()
+            const apps = window.firebase.getApps()
             let app;
             if (apps.length >= 1) {
                 app = apps[0];
             } else {
-                // @ts-ignore
-                app = firebase.initializeApp(config);
+                app = window.firebase.initializeApp(config);
             }
-            // @ts-ignore
-            const auth = Auth.getAuth(app);
-            // @ts-ignore
-            await Auth.signInWithCustomToken(auth, token);
+            const auth = window.Auth.getAuth(app);
+            await window.Auth.signInWithCustomToken(auth, token);
         }, { token: this.token, config: this.options })
     }
+    
     async logout(page: Page) {
         this.addFirebaseScript(page)
         await page.evaluate(async () => {
-            // @ts-ignore
-            const auth = Auth.getAuth()
+            const auth = window.Auth.getAuth()
             await auth.signOut()
         })
 
