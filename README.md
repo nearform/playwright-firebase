@@ -10,7 +10,7 @@ Tidy way to authenticate Playwright E2E tests on Firebase.
 ### TypeScript
 If you're using Typescript, one small addition you'll need to make is to add the type `Credentials` to your `playwright.config.ts` such that
 ```
-import {Credentials} from <insert plugin name here>
+import {Credentials} from 'playwright-firebase'
 export default defineConfig<Credentials>({
   ...
   })
@@ -19,7 +19,7 @@ export default defineConfig<Credentials>({
 Create a setup file that is ran before all tests, where we'll redefine test, so you can import it from your setup file with the `auth` fixture added.
 ```
 // auth.setup.ts
-import playwrightFirebasePlugin from <insert plugin name here>
+import playwrightFirebasePlugin from 'playwright-firebase'
 import { test as base } from '@playwright/test'
 
 const serviceAccount = JSON.parse(process.env.SERVICE_ACCOUNT!)
@@ -27,6 +27,12 @@ const uid = process.env.REACT_APP_UID!
 const options = JSON.parse(process.env.REACT_APP_FIREBASE_CONFIG!)
 export const test = playwrightFirebasePlugin(serviceAccount, options, uid, base)
 ```
+
+The default Firebase version used is `9.6.10`. In order to change this you can pass the version into the `playwrightFirebasePlugin` function as an optional fifth argument:
+```
+playwrightFirebasePlugin(serviceAccount, options, uid, base, version)
+```
+
 Where your secrets are stored in a `.env` file. Make sure to **NOT COMMIT THIS FILE**. 
 Now, by using the new `test` we can incorporate the `auth` generated from the package.
 ```
