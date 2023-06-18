@@ -10,7 +10,7 @@
   "types": "./dist/typings/index.d.ts",
   "scripts": {
     "lint": "eslint \"*.{ts,tsx}\"",
-    "prepare": "husky install",
+    "prepare": "husky install && npm run build",
     "test": "cd tests/helpers/test-site && npm ci && npx playwright test",
     "test:pw": "npx playwright test",
     "pw": "npx playwright install --with-deps",
