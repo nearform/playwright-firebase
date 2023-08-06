@@ -3,7 +3,7 @@ import type { FirebaseApp, FirebaseOptions } from 'firebase/app'
 import type { Auth, User } from 'firebase/auth'
 import type { Page } from '@playwright/test'
 
-import { addFirebaseScript, getToken } from './auth.setup.js'
+import { addFirebaseScript, getToken } from './auth.setup'
 
 // Since these are declared in browser modules, it's hard to understand what the types should be.
 // As such we're defining what shape we're expecting.
@@ -25,7 +25,7 @@ declare global {
 }
 
 export class Authentication {
-  private user: User | null = null
+  userSet = false
 
   constructor(
     private readonly UID: string,
@@ -35,30 +35,40 @@ export class Authentication {
   ) {}
 
   async login(page: Page) {
-    if (this.user) {
+    if (this.userSet) {
       console.info('User already authenticated')
       return
     }
     const token: string = await getToken(this.serviceAccount, this.UID)
     await addFirebaseScript(page, this.version)
-    await page.evaluate(
-      async ({ token, config }) => {
-        const apps = window.firebase.getApps()
-        const app = apps.length
-          ? apps[0]
-          : window.firebase.initializeApp(config)
-        const auth = window.Auth.getAuth(app)
-        await window.Auth.signInWithCustomToken(auth, token)
-      },
-      { token, config: this.options }
-    )
+    try {
+      await page.evaluate(
+        async ({ token, config }) => {
+          const apps = window.firebase.getApps()
+          const app = apps.length
+            ? apps[0]
+            : window.firebase.initializeApp(config)
+          const auth = window.Auth.getAuth(app)
+          await window.Auth.signInWithCustomToken(auth, token)
+        },
+        { token, config: this.options }
+      )
+      this.userSet = true
+    } catch {
+      console.log('Error initialising and signing in')
+    }
   }
 
   async logout(page: Page) {
     await addFirebaseScript(page, this.version)
-    await page.evaluate(async () => {
-      const auth = window.Auth.getAuth()
-      await auth.signOut()
-    })
+    try {
+      await page.evaluate(async () => {
+        const auth = window.Auth.getAuth()
+        await auth.signOut()
+      })
+      this.userSet = false
+    } catch {
+      console.log('Error signing out')
+    }
   }
 }
