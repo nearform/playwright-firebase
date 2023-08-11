@@ -14,5 +14,5 @@ node_modules
 .auth
 serviceAccount.json
 .env
-./dist
+dist
 

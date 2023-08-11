@@ -11,11 +11,11 @@
   "scripts": {
     "lint": "eslint \"*.{ts,tsx}\"",
     "prepare": "husky install && npm run build",
-    "test": "cd tests/helpers/test-site && npm ci && npx playwright test",
+    "test": "jest",
+    "test:e2e": "cd tests/helpers/test-site && npm ci && npx playwright test",
     "test:pw": "npx playwright test",
     "pw": "npx playwright install --with-deps",
-    "build": "tsc",
-    "unit:test": "jest"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",

@@ -39,6 +39,15 @@ export class Authentication {
       console.info('User already authenticated')
       return
     }
+
+    const response = await fetch(
+      `https://www.gstatic.com/firebasejs/${this.version}/firebase-auth.js`
+    )
+    if (response.status.toString().startsWith('4')) {
+      throw new Error(
+        'Bad Request: Please ensure your version number is correct.'
+      )
+    }
     const token: string = await getToken(this.serviceAccount, this.UID)
     await addFirebaseScript(page, this.version)
     try {
