@@ -17,6 +17,7 @@ const getToken = async (serviceAccount: ServiceAccount, uid: string) => {
   if (admin.apps?.length === 0) {
     setupAdmin(serviceAccount)
   }
+
   const token: string = await admin.auth().createCustomToken(uid)
   return token
 }
