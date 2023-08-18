@@ -3,11 +3,50 @@
 # Playwright-Firebase plugin
 
 Tidy way to authenticate Playwright E2E tests on Firebase. 
+## Commands
+- `auth.login(page)` : logs in
+- `auth.logout(page)`: logs out
+## Setup
+### TypeScript
+If you're using Typescript, one small addition you'll need to make is to add the type `Credentials` to your `playwright.config.ts` such that
+```
+import {Credentials} from 'playwright-firebase'
+export default defineConfig<Credentials>({
+  ...
+  })
+```
 
-## Basics
+Create a setup file that is ran before all tests, where we'll redefine test, so you can import it from your setup file with the `auth` fixture added.
+```
+// auth.setup.ts
+import playwrightFirebasePlugin from 'playwright-firebase'
+import { test as base } from '@playwright/test'
 
-The main function is `playwrightFirebasePlugin` that takes in 3 parameters: Service Account (admin side), User ID, and Firebase configurations (for default app). The admin information is used to generate an admin firebase instance, and that instance is used to create a custom token. Another firebase instance is used, given the UID and Firebase configurations to sign in using that custom token, the response being an object that we can use in the session storage of the website for authentication. 
+const serviceAccount = JSON.parse(process.env.SERVICE_ACCOUNT!)
+const uid = process.env.REACT_APP_UID!
+const options = JSON.parse(process.env.REACT_APP_FIREBASE_CONFIG!)
+export const test = playwrightFirebasePlugin(serviceAccount, options, uid, base)
+```
 
-We use Playwright's fixtures to create a login function capable of handling the read/write of the session storage . This read/write feature is only for early-stage development, and will be deprecated in preference for storing the session storage in the Playwright environment. 
+The default Firebase version used is `9.6.10`. In order to change this you can pass the version into the `playwrightFirebasePlugin` function as an optional fifth argument:
+```
+playwrightFirebasePlugin(serviceAccount, options, uid, base, version)
+```
 
-The login fixture interacts with the Browser environment, reading the credentials, and pushing them into the session storage.
+Where your secrets are stored in a `.env` file. Make sure to **NOT COMMIT THIS FILE**. 
+Now, by using the new `test` we can incorporate the `auth` generated from the package.
+```
+import { expect } from '@playwright/test';
+import { test } from '../auth.setup'
+import { Page } from '@playwright/test';
+test('has title', async ({ page, auth }: { page: Page, auth: any }) => {
+  await page.goto('/', { waitUntil: 'networkidle' });
+  await auth.login(page)
+
+  const txt = page.getByText('Welcome! You are now logged in')
+  await expect(txt).toBeVisible()
+  await auth.logout(page)
+  await expect(txt).not.toBeVisible()
+});
+```
+

@@ -10,6 +10,10 @@ jobs:
   test:
     name: Lint and test
     runs-on: ubuntu-latest
+    env:
+      REACT_APP_UID: ${{ secrets.REACT_APP_UID }}
+      REACT_APP_FIREBASE_CONFIG: ${{ secrets.REACT_APP_FIREBASE_CONFIG }}
+      SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -17,8 +21,9 @@ jobs:
           node-version-file: '.nvmrc'
       - run: |
           npm ci
+          npm run pw
           npm run lint
-          npm test
+          npm run test
 
   automerge:
     name: Merge dependabot's PRs

@@ -1,36 +1,71 @@
 {
-  "name": "hub-template",
+  "name": "playwright-firebase",
   "version": "1.0.0",
-  "description": "Template to start a new repository on the hub",
-  "main": "index.js",
+  "description": "Plugin to allow for Firebase authentication in Playwright tests",
+  "main": "dist/index.js",
   "type": "module",
+  "files": [
+    "dist/**/*"
+  ],
+  "types": "./dist/typings/index.d.ts",
   "scripts": {
-    "lint": "eslint .",
-    "test": "echo \"Error: no test specified\" && exit 0",
-    "prepare": "husky install"
+    "lint": "eslint \"*.{ts,tsx}\"",
+    "prepare": "husky install && npm run build",
+    "test": "jest",
+    "test:e2e": "cd tests/helpers/test-site && npm ci && npx playwright test",
+    "test:pw": "npx playwright test",
+    "pw": "npx playwright install --with-deps",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nearform/hub-template.git"
+    "url": "git+https://github.com/nearform/playwright-firebase.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "playwright",
+    "firebase",
+    "testing",
+    "plugin"
+  ],
+  "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/nearform/hub-template/issues"
+    "url": "https://github.com/nearform/playwright-firebase/issues"
   },
-  "homepage": "https://github.com/nearform/hub-template#readme",
+  "homepage": "https://github.com/nearform/playwright-firebase#readme",
   "devDependencies": {
-    "@commitlint/cli": "^17.7.1",
+    "@babel/core": "^7.21.8",
+    "@babel/preset-env": "^7.21.5",
+    "@babel/preset-typescript": "^7.22.5",
+    "@commitlint/cli": "^17.6.3",
     "@commitlint/config-conventional": "^17.7.0",
+    "@jest/globals": "^29.5.0",
+    "@playwright/test": "^1.33.0",
+    "@types/node": "^20.1.2",
+    "@typescript-eslint/eslint-plugin": "^5.59.5",
+    "@typescript-eslint/parser": "^5.59.5",
+    "babel-jest": "^29.5.0",
     "eslint": "^8.47.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
+    "firebase": "^9.22.0",
+    "firebase-admin": "^11.8.0",
     "husky": "^8.0.3",
+    "jest": "^29.5.0",
     "lint-staged": "^14.0.0",
-    "prettier": "^3.0.1"
+    "playwright": "^1.33.0",
+    "prettier": "^3.0.1",
+    "ts-jest": "^29.1.1"
+  },
+  "peerDependencies": {
+    "firebase-admin": "^11.8.0"
   },
   "lint-staged": {
     "*.{js,jsx}": "eslint --cache --fix"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "firebase-tools": "^12.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
   }
 }
