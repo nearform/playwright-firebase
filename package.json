@@ -47,7 +47,7 @@
     "eslint": "^8.47.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
-    "firebase": "^9.22.0",
+    "firebase": "^10.2.0",
     "firebase-admin": "^11.8.0",
     "husky": "^8.0.3",
     "jest": "^29.5.0",
