@@ -3,14 +3,22 @@
 # Playwright-Firebase plugin
 
 Tidy way to authenticate Playwright E2E tests on Firebase. 
+
+## Installation
+
+In order to install this package into your playwright project use `npm install @nearform/playwright-firebase` or `yarn add @nearform-firebase`
+
 ## Commands
 - `auth.login(page)` : logs in
 - `auth.logout(page)`: logs out
+
 ## Setup
+
 ### TypeScript
+
 If you're using Typescript, one small addition you'll need to make is to add the type `Credentials` to your `playwright.config.ts` such that
 ```
-import {Credentials} from 'playwright-firebase'
+import {Credentials} from '@nearform/playwright-firebase'
 export default defineConfig<Credentials>({
   ...
   })
@@ -19,7 +27,7 @@ export default defineConfig<Credentials>({
 Create a setup file that is ran before all tests, where we'll redefine test, so you can import it from your setup file with the `auth` fixture added.
 ```
 // auth.setup.ts
-import playwrightFirebasePlugin from 'playwright-firebase'
+import playwrightFirebasePlugin from '@nearform/playwright-firebase'
 import { test as base } from '@playwright/test'
 
 const serviceAccount = JSON.parse(process.env.SERVICE_ACCOUNT!)
