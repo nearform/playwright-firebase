@@ -31,7 +31,7 @@ export default function playwrightFirebasePlugin(
     PlaywrightTestArgs & PlaywrightTestOptions,
     PlaywrightWorkerArgs & PlaywrightWorkerOptions
   >,
-  version = '9.6.10'
+  version = '10.5.0'
 ) {
   return base.extend<{ auth: Authentication } & AuthenticationParams>({
     UID: [UID, { option: true }],
