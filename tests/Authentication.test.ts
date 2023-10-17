@@ -17,10 +17,10 @@ const TEST_SERVICE_ACCOUNT = {}
 const TEST_VERSION = 'ver'
 const mockedStatusCode = jest.fn()
 
-const mockedEvalute = jest.fn()
+const mockedEvaluate = jest.fn()
 const mockedAddScriptTag = jest.fn()
 const pageMock: Page = {
-  evaluate: mockedEvalute,
+  evaluate: mockedEvaluate,
   addScriptTag: mockedAddScriptTag
 } as unknown as Page
 
@@ -39,13 +39,12 @@ const mockedResponse = () =>
 
 describe('Authentication Class tests', () => {
   beforeEach(() => {
-    // mockedEvalute.mockReset()
     jest.spyOn(authSetup, 'getToken').mockReturnValue(Promise.resolve('hello'))
     jest.spyOn(global, 'fetch').mockImplementation(mockedResponse)
     mockedStatusCode.mockReturnValue(200)
   })
   afterEach(() => {
-    jest.restoreAllMocks()
+    jest.clearAllMocks()
   })
   test('Authentication class initialised w/ log in/out functions', () => {
     const Auth = generateAuth()
@@ -56,7 +55,7 @@ describe('Authentication Class tests', () => {
   test('Logging in calls the evaluate function of the page + addScriptTag', async () => {
     const Auth = generateAuth()
     await Auth.login(pageMock)
-    expect(mockedEvalute).toHaveBeenCalled()
+    expect(mockedEvaluate).toHaveBeenCalled()
     expect(mockedAddScriptTag).toHaveBeenCalledTimes(3)
   })
   test('Bad version number throws', async () => {
@@ -70,7 +69,7 @@ describe('Authentication Class tests', () => {
     const Auth = generateAuth()
     Auth.userSet = true
     await Auth.login(pageMock)
-    expect(mockedEvalute).not.toHaveBeenCalled()
+    expect(mockedEvaluate).not.toHaveBeenCalled()
   })
   test('Logging out resets user', async () => {
     const Auth = generateAuth()
