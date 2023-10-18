@@ -2,13 +2,14 @@
 
 # Playwright-Firebase plugin
 
-Tidy way to authenticate Playwright E2E tests on Firebase. 
+Tidy way to authenticate Playwright E2E tests on Firebase.
 
 ## Installation
 
 In order to install this package into your playwright project use `npm install @nearform/playwright-firebase` or `yarn add @nearform-firebase`
 
 ## Commands
+
 - `auth.login(page)` : logs in
 - `auth.logout(page)`: logs out
 
@@ -17,6 +18,7 @@ In order to install this package into your playwright project use `npm install @
 ### TypeScript
 
 If you're using Typescript, one small addition you'll need to make is to add the type `Credentials` to your `playwright.config.ts` such that
+
 ```
 import {Credentials} from '@nearform/playwright-firebase'
 export default defineConfig<Credentials>({
@@ -25,6 +27,7 @@ export default defineConfig<Credentials>({
 ```
 
 Create a setup file that is ran before all tests, where we'll redefine test, so you can import it from your setup file with the `auth` fixture added.
+
 ```
 // auth.setup.ts
 import playwrightFirebasePlugin from '@nearform/playwright-firebase'
@@ -36,13 +39,15 @@ const options = JSON.parse(process.env.REACT_APP_FIREBASE_CONFIG!)
 export const test = playwrightFirebasePlugin(serviceAccount, options, uid, base)
 ```
 
-The default Firebase version used is `9.6.10`. In order to change this you can pass the version into the `playwrightFirebasePlugin` function as an optional fifth argument:
+The default Firebase version used is `10.5.0`. In order to change this you can pass the version into the `playwrightFirebasePlugin` function as an optional fifth argument:
+
 ```
 playwrightFirebasePlugin(serviceAccount, options, uid, base, version)
 ```
 
-Where your secrets are stored in a `.env` file. Make sure to **NOT COMMIT THIS FILE**. 
+Where your secrets are stored in a `.env` file. Make sure to **NOT COMMIT THIS FILE**.
 Now, by using the new `test` we can incorporate the `auth` generated from the package.
+
 ```
 import { expect } from '@playwright/test';
 import { test } from '../auth.setup'
@@ -57,4 +62,3 @@ test('has title', async ({ page, auth }: { page: Page, auth: any }) => {
   await expect(txt).not.toBeVisible()
 });
 ```
-
