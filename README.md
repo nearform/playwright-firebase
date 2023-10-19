@@ -115,8 +115,7 @@ Within this repo we have an `example/` folder that contains a sample React appli
 1. Clone this repository
 2. `cd ./example`
 3. `npm i`
-4. `npm init playwright@latest`
-5. `npm run start`
+4. `npm run start`
 
 At this point, you should see a web server running on `localhost:3000`. If not, or any of the above steps did not execute, please raise an issue!
 
