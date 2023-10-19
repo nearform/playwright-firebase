@@ -20,9 +20,9 @@ Want to see it in action? Go to [Example](#example) to try it out!
 
 ## Contents
 
-0. [Setup](#setup)
-1. [Motivation](#motivation)
-2. [Example](#example)
+1. [Setup](#setup)
+2. [Motivation](#motivation)
+3. [Example](#example)
 
 <a name="setup"></a>
 
