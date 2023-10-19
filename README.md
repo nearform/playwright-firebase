@@ -42,7 +42,7 @@ It's recommended to place these values in a `.env` file. For clarity, the Fireba
 
 ### Attaching playright-firebase as a fixture to Playwright
 
-Playwright is based on fixtures. You have likely already used them within playwright, they are the `{ page }` object that is passed in to `test`. More information on them [here](https://playwright.dev/docs/test-fixtures). In the very same way, we are able to add our own fixture, which we call `auth` to the tests. To do so, we need to create a setup file that will automatically run before all other tests. We will call this `auth.setup.ts`
+Playwright is based on fixtures. You have likely already used them within Playwright, they are the `{ page }` object that is passed in to `test`. More information on them [here](https://playwright.dev/docs/test-fixtures). In the very same way, we are able to add our own fixture, which we call `auth` to the tests. To do so, we need to create a setup file that will automatically run before all other tests. We will call this `auth.setup.ts`
 
 ```ts
 // auth.setup.ts
