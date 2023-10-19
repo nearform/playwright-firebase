@@ -113,13 +113,12 @@ This plugin was developed with the 2nd method in mind as it is
 Within this repo we have an `example/` folder that contains a sample React application for authenticating with the Google Provider. You'll need to setup the Firebase environment variables as described above in the setup section, but the rest is taken care of.
 
 1. Clone this repository
-2. Run the following:
-   a. `cd ./example`
-   b. `npm i`
-   c. `npm init playwright@latest`
-   d. `npm run start`
+2. `cd ./example`
+3. `npm i`
+4. `npm init playwright@latest`
+5. `npm run start`
 
 At this point, you should see a web server running on `localhost:3000`. If not, or any of the above steps did not execute, please raise an issue!
 
-3. Make a `.env` file within `./example`, copy and paste over the variable names from `.env.sample` and populate them with your real Firebase environment variables
-4. Run `npx playwright test`
+6. Make a `.env` file within `./example`, copy and paste over the variable names from `.env.sample` and populate them with your real Firebase environment variables
+7. Run `npx playwright test`
