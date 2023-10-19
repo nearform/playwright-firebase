@@ -7,7 +7,7 @@ import type {
   PlaywrightWorkerArgs,
   PlaywrightWorkerOptions
 } from '@playwright/test'
-import { Authentication } from './plugin/Authentication.js'
+import { Authentication } from './plugin/Authentication'
 
 export type Credentials = {
   auth: Authentication
