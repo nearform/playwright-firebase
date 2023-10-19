@@ -38,7 +38,13 @@ To set up this plugin you will need three sensitive environment variables in ord
 
 For more information about Firebase you can read the documentation [here](https://firebase.google.com/docs/auth/web/start)
 
-It's recommended to place these values in a `.env` file. For clarity, the Firebase User ID is often abbreviated to UID, as you will find below.
+It's recommended to place these values in a `.env` file. For clarity, the Firebase User ID is often abbreviated to UID, as you will find below. The plugin accepts
+
+- Service Account: JSON
+- UID: string
+- Firebase Configurations: JSON
+
+you don't need to place quotes around these environment variables.
 
 ### Attaching playright-firebase as a fixture to Playwright
 
@@ -113,11 +119,12 @@ This plugin was developed with the 2nd method in mind as it is
 Within this repo we have an `example/` folder that contains a sample React application for authenticating with the Google Provider. You'll need to setup the Firebase environment variables as described above in the setup section, but the rest is taken care of.
 
 1. Clone this repository
-2. `cd ./example`
-3. `npm i`
-4. `npm run start`
+2. `npm i`
+3. `cd ./example`
+4. `npm i`
+5. `npm run start`
 
-At this point, you should see a web server running on `localhost:3000`. If not, or any of the above steps did not execute, please raise an issue!
+At this point, you should see a web server running on `localhost:3000`. If your screen is blank, check the console on your browser for any error messages. It's likely that you haven't place the `.env` file in the right location, or that you haven't filled it in correctly.
 
 6. Make a `.env` file within `./example`, copy and paste over the variable names from `.env.sample` and populate them with your real Firebase environment variables
 7. Run `npx playwright test`
