@@ -30,7 +30,7 @@ Want to see it in action? Go to [Example](#example) to try it out!
 
 ### Firebase environment variables
 
-To set up this plugin you will need three environment variables in order to authenticate with Firebase. These are:
+To set up this plugin you will need three sensitive environment variables in order to authenticate with Firebase. These are:
 
 1. [Firebase Service Account](https://firebase.google.com/docs/app-distribution/authenticate-service-account)
 2. [Firebase User ID](https://firebase.google.com/docs/auth/web/manage-users)
@@ -38,7 +38,7 @@ To set up this plugin you will need three environment variables in order to auth
 
 For more information about Firebase you can read the documentation [here](https://firebase.google.com/docs/auth/web/start)
 
-It's recommended to place these values in a `.env` file. Make sure to **NOT COMMIT THIS FILE**. For clarity, the Firebase User ID is often abbreviated to UID, as you will find below.
+It's recommended to place these values in a `.env` file. For clarity, the Firebase User ID is often abbreviated to UID, as you will find below.
 
 ### Attaching playright-firebase as a fixture to Playwright
 
