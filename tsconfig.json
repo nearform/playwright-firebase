@@ -10,13 +10,6 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "exclude": [
-    "node_modules",
-    "playwright.config.ts",
-    "tests"
-  ],
-  "include": [
-    "./index.ts",
-    "./plugin"
-  ]
+  "exclude": ["node_modules", "playwright.config.ts", "tests", "example"],
+  "include": ["./index.ts", "./plugin"]
 }
