@@ -1,4 +1,4 @@
-![CI](https://github.com/nearform/hub-template/actions/workflows/ci.yml/badge.svg?event=push)
+[![Continuous Integration](https://github.com/nearform/playwright-firebase/actions/workflows/ci.yml/badge.svg)](https://github.com/nearform/playwright-firebase/actions/workflows/ci.yml)
 
 # @nearform/playwright-firebase
 
