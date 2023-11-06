@@ -8,7 +8,8 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "declaration": true
   },
   "exclude": ["node_modules", "playwright.config.ts", "tests", "example"],
   "include": ["./index.ts", "./plugin"]
