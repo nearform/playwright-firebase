@@ -1,6 +1,6 @@
 {
   "name": "@nearform/playwright-firebase",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Plugin to allow for Firebase authentication in Playwright tests",
   "main": "dist/index.js",
   "type": "module",
