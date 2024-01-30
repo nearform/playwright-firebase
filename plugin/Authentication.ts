@@ -3,7 +3,7 @@ import type { FirebaseApp, FirebaseOptions } from 'firebase/app'
 import type { Auth, User } from 'firebase/auth'
 import type { Page } from '@playwright/test'
 
-import { addFirebaseScript, getToken } from './auth.setup'
+import { addFirebaseScript, getToken } from './auth.setup.js'
 
 // Since these are declared in browser modules, it's hard to understand what the types should be.
 // As such we're defining what shape we're expecting.

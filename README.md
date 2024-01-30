@@ -2,6 +2,10 @@
 
 # @nearform/playwright-firebase
 
+> [!NOTE]  
+> This is an ESM only package, please make sure your usage follows the rules of ESM 
+> User the following [guide](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c#pure-esm-package) to learn more
+
 Tidy way to authenticate Playwright E2E tests on Firebase.
 
 Install using npm:
