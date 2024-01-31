@@ -3,9 +3,22 @@
   "version": "1.2.8",
   "description": "Plugin to allow for Firebase authentication in Playwright tests",
   "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "types": {
+        "import": "./dist/index.d.ts",
+        "require": "./cjs/index.d.ts"
+      },
+      "import": "./dist/index.js",
+      "require": "./cjs/index.js",
+      "default": "./cjs/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "type": "module",
   "files": [
-    "dist/**/*"
+    "dist/**/*",
+    "cjs/**/*"
   ],
   "types": "./dist/index.d.ts",
   "scripts": {
@@ -15,7 +28,9 @@
     "test:e2e": "cd tests/helpers/test-site && npm ci && npx playwright test",
     "test:pw": "npx playwright test",
     "pw": "npx playwright install --with-deps",
-    "build": "tsc"
+    "build": "npm run build:cjs; npm run build:esm",
+    "build:cjs": "tsc --module commonjs --outDir cjs; echo '{\"type\":\"commonjs\"}' > cjs/package.json",
+    "build:esm": "tsc --module esnext --outDir dist"
   },
   "repository": {
     "type": "git",

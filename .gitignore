@@ -16,3 +16,5 @@ serviceAccount.json
 .env
 dist
 
+
+cjs
