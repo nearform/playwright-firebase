@@ -29,7 +29,7 @@
     "test:pw": "npx playwright test",
     "pw": "npx playwright install --with-deps",
     "build": "npm run build:cjs; npm run build:esm",
-    "build:cjs": "tsc --module commonjs --outDir cjs",
+    "build:cjs": "tsc --module commonjs --outDir cjs; echo '{\"type\":\"commonjs\"}' > cjs/package.json",
     "build:esm": "tsc --module esnext --outDir dist"
   },
   "repository": {
