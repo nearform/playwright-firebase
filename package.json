@@ -2,23 +2,21 @@
   "name": "@nearform/playwright-firebase",
   "version": "1.2.8",
   "description": "Plugin to allow for Firebase authentication in Playwright tests",
-  "main": "dist/index.js",
+  "main": "./dist/index.cjs",
   "exports": {
     ".": {
       "types": {
-        "import": "./dist/index.d.ts",
-        "require": "./cjs/index.d.ts"
+        "require": "./dist/index.d.cts",
+        "import": "./dist/index.d.ts"
       },
       "import": "./dist/index.js",
-      "require": "./cjs/index.js",
-      "default": "./cjs/index.js"
+      "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
   },
   "type": "module",
   "files": [
-    "dist/**/*",
-    "cjs/**/*"
+    "dist"
   ],
   "types": "./dist/index.d.ts",
   "scripts": {
@@ -28,10 +26,13 @@
     "test:e2e": "cd tests/helpers/test-site && npm ci && npx playwright test",
     "test:pw": "npx playwright test",
     "pw": "npx playwright install --with-deps",
-    "build": "npm run build:cjs; npm run build:esm; npm run pkg:prepare",
-    "build:cjs": "tsc --module commonjs --outDir cjs",
-    "build:esm": "tsc --module esnext --outDir dist",
-    "pkg:prepare": "node scripts/prepare-packages.js"
+    "build": "tsup index.ts --format esm,cjs --dts"
+  },
+  "unbuild": {
+    "entries": [
+      "index"
+    ],
+    "declaration": false
   },
   "repository": {
     "type": "git",
@@ -72,6 +73,7 @@
     "prettier": "^3.0.1",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",
+    "tsup": "^8.0.1",
     "typescript": "^5.2.2"
   },
   "peerDependencies": {
