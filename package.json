@@ -28,10 +28,9 @@
     "test:e2e": "cd tests/helpers/test-site && npm ci && npx playwright test",
     "test:pw": "npx playwright test",
     "pw": "npx playwright install --with-deps",
-    "build": "npm run build:cjs; npm run build:esm; npm run pkg:prepare",
+    "build": "npm run build:cjs; npm run build:esm",
     "build:cjs": "tsc --module commonjs --outDir cjs",
-    "build:esm": "tsc --module esnext --outDir dist",
-    "pkg:prepare": "node scripts/prepare-packages.js"
+    "build:esm": "tsc --module esnext --outDir dist"
   },
   "repository": {
     "type": "git",
