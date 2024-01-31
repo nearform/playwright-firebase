@@ -7,7 +7,7 @@
     ".": {
       "types": {
         "import": "./dist/index.d.ts",
-        "require": "./cjs/index.d.cts"
+        "require": "./cjs/index.d.ts"
       },
       "import": "./dist/index.js",
       "require": "./cjs/index.js",
