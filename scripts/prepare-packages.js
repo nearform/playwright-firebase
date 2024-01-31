@@ -48,8 +48,8 @@ async function collectDTSFiles(directory, paths = []) {
   const assets = await fs.promises.readdir(directory)
   for (let asset of assets) {
     const assetPath = join(directory, asset)
-    const dir = await fs.promises.stat(assetPath)
-    if (dir.isFile()) {
+    const fileStat = await fs.promises.stat(assetPath)
+    if (fileStat.isFile()) {
       paths.push(assetPath)
     } else {
       paths = paths.concat(await collectDTSFiles(assetPath, []))
