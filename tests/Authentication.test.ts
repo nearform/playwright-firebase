@@ -19,9 +19,15 @@ const mockedStatusCode = jest.fn()
 
 const mockedEvaluate = jest.fn()
 const mockedAddScriptTag = jest.fn()
+const mockedMainFrameFuncs = {
+  waitForFunction: jest.fn().mockReturnValue(true)
+}
+const mockedMainFrame = jest.fn(() => mockedMainFrameFuncs)
+
 const pageMock: Page = {
   evaluate: mockedEvaluate,
-  addScriptTag: mockedAddScriptTag
+  addScriptTag: mockedAddScriptTag,
+  mainFrame: mockedMainFrame
 } as unknown as Page
 
 const generateAuth = () => {
