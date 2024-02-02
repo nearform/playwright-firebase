@@ -9,7 +9,7 @@ import {
 import { Page } from '@playwright/test'
 import * as authSetup from '../plugin/auth.setup'
 
-import { Authentication } from '../plugin/Authentication'
+import { Authentication, errors } from '../plugin/Authentication'
 
 const TEST_UID = 'test-uid'
 const TEST_OPTIONS = {}
@@ -20,7 +20,7 @@ const mockedStatusCode = jest.fn()
 const mockedEvaluate = jest.fn()
 const mockedAddScriptTag = jest.fn()
 const mockedMainFrameFuncs = {
-  waitForFunction: jest.fn().mockReturnValue(true)
+  waitForFunction: jest.fn()
 }
 const mockedMainFrame = jest.fn(() => mockedMainFrameFuncs)
 
@@ -38,6 +38,7 @@ const generateAuth = () => {
     TEST_VERSION
   )
 }
+
 const mockedResponse = () =>
   Promise.resolve({
     status: mockedStatusCode()
@@ -47,6 +48,7 @@ describe('Authentication Class tests', () => {
   beforeEach(() => {
     jest.spyOn(authSetup, 'getToken').mockReturnValue(Promise.resolve('hello'))
     jest.spyOn(global, 'fetch').mockImplementation(mockedResponse)
+    mockedMainFrameFuncs.waitForFunction.mockImplementation(() => true)
     mockedStatusCode.mockReturnValue(200)
   })
   afterEach(() => {
@@ -83,5 +85,12 @@ describe('Authentication Class tests', () => {
     await Auth.logout(pageMock)
     expect(pageMock.evaluate).toHaveBeenCalled()
     expect(Auth.userSet).toBe(false)
+  })
+  test("Fail when the firebase script doesn't load", async () => {
+    mockedMainFrameFuncs.waitForFunction.mockImplementation(() => false)
+    const Auth = generateAuth()
+    Auth.userSet = false
+    const error = new Error(errors.FIREBASE_MODULE_LOAD_ERROR)
+    expect(Auth.login(pageMock)).rejects.toThrow(error)
   })
 })

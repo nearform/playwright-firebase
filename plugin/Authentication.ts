@@ -24,6 +24,14 @@ declare global {
   }
 }
 
+export const errors = {
+  FIREBASE_VERSION_ERROR:
+    'Bad Request: Please ensure your version number is correct.',
+  FIREBASE_MODULE_LOAD_ERROR:
+    'Failed to load firebase module script. Please check your network settings',
+  FIREBASE_INIT_ERROR: 'Error initialising and signing in'
+}
+
 export class Authentication {
   userSet = false
 
@@ -53,11 +61,10 @@ export class Authentication {
 
     const firebaseModuleLoaded = await page
       .mainFrame()
-      .waitForFunction('window.firebase !== undefined')
+      .waitForFunction('window.firebase !== undefined', {})
 
     if (!firebaseModuleLoaded) {
-      console.log('Error initialising and signing in')
-      return
+      throw new Error(errors.FIREBASE_MODULE_LOAD_ERROR)
     }
 
     try {
@@ -74,7 +81,7 @@ export class Authentication {
       )
       this.userSet = true
     } catch {
-      console.log('Error initialising and signing in')
+      throw new Error(errors.FIREBASE_INIT_ERROR)
     }
   }
 
