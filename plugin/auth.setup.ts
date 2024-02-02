@@ -31,6 +31,10 @@ async function addFirebaseScript(page: Page, version: string) {
     url: `https://www.gstatic.com/firebasejs/${version}/firebase-app.js`,
     type: 'module'
   })
+
+  // Note: Will resolve as soon as the content is injected into the frame
+  // and will not wait for the scripts to be loaded in this case.
+  // The above caching may or maynot work based on network conditions
   await page.addScriptTag({
     content: `
         import * as Auth from 'https://www.gstatic.com/firebasejs/${version}/firebase-auth.js';
