@@ -50,6 +50,16 @@ export class Authentication {
     }
     const token: string = await getToken(this.serviceAccount, this.UID)
     await addFirebaseScript(page, this.version)
+
+    const firebaseModuleLoaded = await page
+      .mainFrame()
+      .waitForFunction('window.firebase !== undefined')
+
+    if (!firebaseModuleLoaded) {
+      console.log('Error initialising and signing in')
+      return
+    }
+
     try {
       await page.evaluate(
         async ({ token, config }) => {
