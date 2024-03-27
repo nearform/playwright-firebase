@@ -23,7 +23,7 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "lint": "eslint \"*.{ts,tsx}\"",
-    "prepare": "husky install && npm run build",
+    "prepare": "husky && npm run build",
     "test": "jest",
     "test:e2e": "cd tests/helpers/test-site && npm ci && npx playwright test",
     "test:pw": "npx playwright test",
