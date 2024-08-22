@@ -16,7 +16,7 @@ export type Credentials = {
   options: FirebaseOptions
 }
 
-interface AuthenticationParams {
+export interface AuthenticationParams {
   UID: string
   options: FirebaseOptions
   serviceAccount: ServiceAccount
