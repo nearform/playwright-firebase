@@ -132,3 +132,5 @@ At this point, you should see a web server running on `localhost:3000`. If your 
 
 6. Make a `.env` file within `./example`, copy and paste over the variable names from `.env.sample` and populate them with your real Firebase environment variables
 7. Run `npx playwright test`
+
+[![banner](https://raw.githubusercontent.com/nearform/.github/refs/heads/master/assets/os-banner-green.svg)](https://www.nearform.com/contact/?utm_source=open-source&utm_medium=banner&utm_campaign=os-project-pages)
