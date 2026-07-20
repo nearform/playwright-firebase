@@ -16,7 +16,7 @@ jobs:
       SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
       - run: |
