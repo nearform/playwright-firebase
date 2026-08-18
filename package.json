@@ -79,7 +79,7 @@
     "firebase-admin": "^13.0.0"
   },
   "lint-staged": {
-    "*.{js,jsx}": "eslint --cache --fix"
+    "*.{ts,tsx}": "eslint --cache --fix"
   },
   "dependencies": {
     "dotenv": "^17.2.0"

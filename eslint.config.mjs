@@ -10,7 +10,6 @@ export default [
   },
   {
     files: ['**/*.{ts,tsx}'],
-    ...js.configs.recommended,
     plugins: { '@typescript-eslint': tsPlugin },
     languageOptions: {
       parser: tsParser,
@@ -20,6 +19,12 @@ export default [
       }
     },
     rules: {
+      // All three rule sets must be spread into this single `rules` object, in
+      // this order. Spreading `js.configs.recommended` at the config-object
+      // level instead is silently useless: it only carries `{ name, rules }`,
+      // so this `rules` key replaces it wholesale and eslint:recommended never
+      // applies.
+      ...js.configs.recommended.rules,
       ...tsPlugin.configs['eslint-recommended'].overrides[0].rules,
       ...tsPlugin.configs.recommended.rules
     }
