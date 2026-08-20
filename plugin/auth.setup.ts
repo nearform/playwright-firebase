@@ -9,7 +9,7 @@ const setupAdmin = (serviceAccount: ServiceAccount): void => {
   try {
     admin.initializeApp({ credential: admin.credential.cert(serviceAccount) })
   } catch (err) {
-    throw Error(`Cannot initialise Firebase Admin: ${err}`)
+    throw new Error(`Cannot initialise Firebase Admin: ${err}`, { cause: err })
   }
 }
 

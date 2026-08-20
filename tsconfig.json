@@ -3,6 +3,10 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",
+    // TypeScript 6 deprecates moduleResolution "node" (node10). The dual
+    // CJS/ESM build overrides --module per target, so node16/bundler are not
+    // drop-in replacements; silence the deprecation until that is reworked.
+    "ignoreDeprecations": "6.0",
     "outDir": "./dist",
     "removeComments": false,
     "esModuleInterop": true,
