@@ -50,7 +50,7 @@
   "devDependencies": {
     "@babel/core": "^7.21.8",
     "@babel/preset-env": "^7.21.5",
-    "@babel/preset-typescript": "^7.22.5",
+    "@babel/preset-typescript": "^8.0.1",
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^21.2.2",
     "@eslint/js": "^10.0.1",
