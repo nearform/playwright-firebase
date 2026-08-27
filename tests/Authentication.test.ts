@@ -11,6 +11,23 @@ import * as authSetup from '../plugin/auth.setup'
 
 import { Authentication, errors } from '../plugin/Authentication'
 
+// `plugin/auth.setup` imports the firebase-admin modular entry points at module
+// load, and firebase-admin 14 pulls an ESM-only `jose` in behind
+// `firebase-admin/auth`, which jest's CJS runtime cannot parse. Nothing in this
+// suite exercises firebase-admin — `getToken` is stubbed below — so both entry
+// points are replaced with inert stubs.
+jest.mock('firebase-admin/app', () => ({
+  initializeApp: jest.fn(),
+  getApps: jest.fn(() => []),
+  cert: jest.fn()
+}))
+
+jest.mock('firebase-admin/auth', () => ({
+  getAuth: jest.fn(() => ({
+    createCustomToken: jest.fn(() => Promise.resolve('token'))
+  }))
+}))
+
 const TEST_UID = 'test-uid'
 const TEST_OPTIONS = {}
 const TEST_SERVICE_ACCOUNT = {}
@@ -71,7 +88,7 @@ describe('Authentication Class tests', () => {
     const Auth = generateAuth()
     expect(async () => {
       await Auth.login(pageMock)
-    }).rejects.toThrowError()
+    }).rejects.toThrow()
   })
   test('If user already exists, dont log in', async () => {
     const Auth = generateAuth()
