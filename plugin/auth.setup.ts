@@ -1,4 +1,10 @@
-import admin, { ServiceAccount } from 'firebase-admin'
+// firebase-admin 14 removed the legacy namespaced API (the `admin` default
+// export carrying `.credential`, `.apps`, `.auth()`), so this uses the modular
+// entry points instead. They are also present in firebase-admin 13, which is
+// why the peer range can stay `^13.0.0 || ^14.0.0`.
+import { cert, getApps, initializeApp } from 'firebase-admin/app'
+import type { ServiceAccount } from 'firebase-admin/app'
+import { getAuth } from 'firebase-admin/auth'
 import type { Page } from '@playwright/test'
 
 /**
@@ -7,18 +13,18 @@ import type { Page } from '@playwright/test'
  */
 const setupAdmin = (serviceAccount: ServiceAccount): void => {
   try {
-    admin.initializeApp({ credential: admin.credential.cert(serviceAccount) })
+    initializeApp({ credential: cert(serviceAccount) })
   } catch (err) {
     throw new Error(`Cannot initialise Firebase Admin: ${err}`, { cause: err })
   }
 }
 
 const getToken = async (serviceAccount: ServiceAccount, uid: string) => {
-  if (admin.apps?.length === 0) {
+  if (getApps().length === 0) {
     setupAdmin(serviceAccount)
   }
 
-  const token: string = await admin.auth().createCustomToken(uid)
+  const token: string = await getAuth().createCustomToken(uid)
   return token
 }
 
