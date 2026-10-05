@@ -81,6 +81,6 @@
     "*.{ts,tsx}": "eslint --cache --fix"
   },
   "dependencies": {
-    "dotenv": "^17.2.0"
+    "dotenv": "^18.0.5"
   }
 }
