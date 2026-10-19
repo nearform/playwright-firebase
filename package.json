@@ -75,12 +75,9 @@
     "typescript": "^6.0.3"
   },
   "peerDependencies": {
-    "firebase-admin": "^13.0.0 || ^14.0.0"
+    "firebase-admin": "^12.0.0 || ^13.0.0 || ^14.0.0"
   },
   "lint-staged": {
     "*.{ts,tsx}": "eslint --cache --fix"
-  },
-  "dependencies": {
-    "dotenv": "^18.0.5"
   }
 }

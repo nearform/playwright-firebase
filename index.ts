@@ -1,4 +1,4 @@
-import type { ServiceAccount } from 'firebase-admin'
+import type { ServiceAccount } from 'firebase-admin/app'
 import type { FirebaseOptions } from 'firebase/app'
 import type {
   TestType,

@@ -1,7 +1,7 @@
 // firebase-admin 14 removed the legacy namespaced API (the `admin` default
 // export carrying `.credential`, `.apps`, `.auth()`), so this uses the modular
-// entry points instead. They are also present in firebase-admin 13, which is
-// why the peer range can stay `^13.0.0 || ^14.0.0`.
+// entry points instead. They are also present in firebase-admin 12 and 13,
+// which is why the peer range is `^12.0.0 || ^13.0.0 || ^14.0.0`.
 import { cert, getApps, initializeApp } from 'firebase-admin/app'
 import type { ServiceAccount } from 'firebase-admin/app'
 import { getAuth } from 'firebase-admin/auth'

@@ -25,9 +25,29 @@ jobs:
           npm run lint
           npm run test
 
+  firebase-admin:
+    name: firebase-admin ${{ matrix.firebase-admin }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        firebase-admin: [12, 13, 14]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+      # The unit tests mock firebase-admin, so this installs each supported
+      # major and mints a real custom token through the built plugin.
+      - run: |
+          npm ci
+          npm install --no-save firebase-admin@${{ matrix.firebase-admin }}
+          npm run build
+          node tests/smoke/mint-token.mjs
+
   automerge:
     name: Merge dependabot's PRs
-    needs: test
+    needs: [test, firebase-admin]
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
