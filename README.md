@@ -20,7 +20,7 @@ or yarn:
 yarn add @nearform/playwright-firebase
 ```
 
-`firebase-admin` is a peer dependency and versions 12, 13 and 14 are supported. The Node.js version you need follows the `firebase-admin` you install (12 needs 14 or later, 13 needs 18 or later, 14 needs 22 or later).
+`firebase-admin` is a peer dependency and versions 12, 13 and 14 are supported. Requires Node.js 18+ (the plugin uses global fetch) and whatever your installed `@playwright/test` needs. Your `firebase-admin` version may require more (14 needs 22+).
 
 Want to see it in action? Go to [Example](#example) to try it out!
 
