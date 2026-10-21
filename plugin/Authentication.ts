@@ -1,4 +1,4 @@
-import type { ServiceAccount } from 'firebase-admin'
+import type { ServiceAccount } from 'firebase-admin/app'
 import type { FirebaseApp, FirebaseOptions } from 'firebase/app'
 import type { Auth, User } from 'firebase/auth'
 import type { Page } from '@playwright/test'
